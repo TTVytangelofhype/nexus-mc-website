@@ -1,0 +1,25 @@
+name: Validate website feeds
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate configuration and JavaScript
+        shell: bash
+        run: |
+          node --check widget.js
+          node - <<'NODE'
+          const fs=require('fs');
+          const c=JSON.parse(fs.readFileSync('config.json'));
+          if(typeof c.githubRepo!=='string'||typeof c.raidStatusUrl!=='string')throw new Error('Invalid config');
+          console.log('Config and widget valid');
+          NODE
