@@ -19,3 +19,7 @@ This repository contains the **raid-status panel and automatic release changelog
 Never expose RCON passwords, server console commands or private player data in public status feeds. Ensure any endpoint permits CORS for the published NEXUS MC domain.
 
 The existing site is hosted at `https://nexusmc.nexusukrp.co.uk` through ChatGPT Sites. **Do not change its Cloudflare DNS record or replace it with this preview.**
+
+## Minecraft raid status exporter (v0.3.4)
+
+The separate NEXUS Raid Boss v0.3.4 plugin source now produces `plugins/NexusRaidBoss/raid-status.json` locally every five seconds. **This does not make the file publicly available.** Copy only this JSON using a secured automated upload to a read-only HTTPS endpoint, configure its CORS policy for the NEXUS MC website, then set `raidStatusUrl` in `config.json`. Do not expose Minecraft server credentials or administration APIs. Until the endpoint is configured, the raid panel intentionally says it is not connected.
