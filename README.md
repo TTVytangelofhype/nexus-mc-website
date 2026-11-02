@@ -27,3 +27,7 @@ The separate NEXUS Raid Boss v0.3.4 plugin source now produces `plugins/NexusRai
 ## cPanel bridge setup (2026-11-02)
 
 The Minecraft plugin already writes its local `raid-status.json`. A separate **secure bridge** is required to upload the status to cPanel. The downloadable setup kit includes a private-token PHP receiver, a public read-only `status.json`, and Linux/Windows upload scripts. Put the public files in `public_html/nexus-raid-api/`, keep the token **outside public_html and never in GitHub**, and schedule the uploader on the game host. Once `https://nexusukrp.co.uk/nexus-raid-api/status.json` displays verified current data, set `config.json` `raidStatusUrl` to that URL. This repository does not automatically publish the existing ChatGPT Sites project.
+
+## Direct Minecraft → cPanel sync (v0.3.5)
+
+NEXUS Raid Boss v0.3.5 adds optional asynchronous authenticated HTTPS publishing from PebbleHost to `https://nexusukrp.co.uk/nexus-raid-api/push.php` every 30 seconds. Configure `website-sync.enabled`, `website-sync.url` and `website-sync.token` in the **private Minecraft plugin** config. Keep that token outside this GitHub repository. After confirming the public `status.json` has a real `updatedAt` timestamp, set `raidStatusUrl` in this repository's `config.json` to `https://nexusukrp.co.uk/nexus-raid-api/status.json`. The ChatGPT Sites original page still needs the widget integrated and republished separately.
