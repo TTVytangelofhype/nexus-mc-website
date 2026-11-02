@@ -1,0 +1,33 @@
+{
+  "updatedAt": "2026-11-02",
+  "entries": [
+    {
+      "version": "0.3.5",
+      "title": "Raid Boss website synchronisation",
+      "date": "2026-11-02",
+      "description": "The raid status publisher now sends live status from PebbleHost to the NEXUS MC website API. Minecraft arena teleporting, boss rotations and automatic announcements remain available.",
+      "type": "plugin"
+    },
+    {
+      "version": "0.3.3",
+      "title": "Raid movement containment",
+      "date": "2026-11-01",
+      "description": "Boss and minion containment added to prevent mobs wandering outside the configured fighting radius.",
+      "type": "plugin"
+    },
+    {
+      "version": "0.3.2",
+      "title": "Automatic raid announcements",
+      "date": "2026-10-30",
+      "description": "Introduced scheduled raid opening announcements and countdown-triggered automatic encounters.",
+      "type": "plugin"
+    },
+    {
+      "version": "0.0.1",
+      "title": "The road to Legendary begins",
+      "date": null,
+      "description": "Milestone progression up to level 900 with the Legendary tag reward.",
+      "type": "site"
+    }
+  ]
+}
