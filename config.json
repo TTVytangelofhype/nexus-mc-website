@@ -1,6 +1,6 @@
 {
   "githubRepo": "TTVytangelofhype/nexus-mc-website",
-  "raidStatusUrl": "",
+  "raidStatusUrl": "https://nexusukrp.co.uk/nexus-raid-api/status.json",
   "refreshSeconds": 30,
   "timeZone": "Europe/London"
 }
