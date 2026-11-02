@@ -23,3 +23,7 @@ The existing site is hosted at `https://nexusmc.nexusukrp.co.uk` through ChatGPT
 ## Minecraft raid status exporter (v0.3.4)
 
 The separate NEXUS Raid Boss v0.3.4 plugin source now produces `plugins/NexusRaidBoss/raid-status.json` locally every five seconds. **This does not make the file publicly available.** Copy only this JSON using a secured automated upload to a read-only HTTPS endpoint, configure its CORS policy for the NEXUS MC website, then set `raidStatusUrl` in `config.json`. Do not expose Minecraft server credentials or administration APIs. Until the endpoint is configured, the raid panel intentionally says it is not connected.
+
+## cPanel bridge setup (2026-11-02)
+
+The Minecraft plugin already writes its local `raid-status.json`. A separate **secure bridge** is required to upload the status to cPanel. The downloadable setup kit includes a private-token PHP receiver, a public read-only `status.json`, and Linux/Windows upload scripts. Put the public files in `public_html/nexus-raid-api/`, keep the token **outside public_html and never in GitHub**, and schedule the uploader on the game host. Once `https://nexusukrp.co.uk/nexus-raid-api/status.json` displays verified current data, set `config.json` `raidStatusUrl` to that URL. This repository does not automatically publish the existing ChatGPT Sites project.
