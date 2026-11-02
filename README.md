@@ -1,33 +1,27 @@
-# NEXUS MC — Website Integrations
+# NEXUS MC — Unified Website Integration
 
-This repository contains the **raid-status panel and automatic release changelog** for NEXUS MC. It is a standalone integration preview, **not a copy of the existing ChatGPT Sites website**.
+**Live website:** https://nexusmc.nexusukrp.co.uk (existing ChatGPT Sites project).  
+**Source of integrations:** this GitHub repository. GitHub updates do **not** automatically publish to the live ChatGPT Sites website.
 
-## Features
-- Public GitHub release feed for the Updates & Progress section.
-- A read-only raid status panel (shows 'Not connected' until a live HTTPS endpoint exists).
-- Client-side refresh every five minutes.
+## Confirmed working
+- NEXUS Raid Boss v0.3.5 uploads raid status directly from PebbleHost to the cPanel endpoint using private authenticated HTTPS.
+- Public read-only feed: https://nexusukrp.co.uk/nexus-raid-api/status.json
+- `config.json` points the website widget to this feed.
 
-## Setup
-1. Publish a GitHub Release in this repository (for example, tag `mc-2026.11.01`).
-2. Open the preview locally with `python -m http.server 8080`.
-3. In `config.json`, set `raidStatusUrl` to a secured, read-only HTTPS JSON endpoint when available.
-4. Integrate these widgets into the **original** NEXUS MC ChatGPT Sites project. This repository does not automatically deploy to that site.
+## Website components
+- `chatgpt-sites-section.html`: ready-to-integrate HTML/CSS for the **Updates & Progress** section and raid panel. Adapt in the actual ChatGPT Sites editor; do not deploy this as a replacement homepage.
+- `widget.js`: release history, live raid countdown, Minecraft colour-code stripping, stale-status checks.
+- `updates.json`: verified development history fallback if no GitHub Release exists yet.
+- `config.json`: public endpoint, release-repository and refresh settings.
+- `index.html`: independent preview.
+- `SITE-INTEGRATION.md`: safe integration and publishing checklist.
+- `CONSOLIDATED-PROJECT.md`: project history and original chat references.
 
-### Raid JSON example
-`{"state":"waiting","bossName":null,"players":0,"nextRaidAt":null,"updatedAt":"2026-11-01T00:00:00Z"}`
+## Work still needed
+The original editable ChatGPT Sites project must be opened and updated with these components, preserving server rules, voting, factions, rankings, cosmetics, and other existing pages. Then publish that site through its own controls. No change to Cloudflare DNS, cPanel cron, or PebbleHost schedules is needed.
 
-Never expose RCON passwords, server console commands or private player data in public status feeds. Ensure any endpoint permits CORS for the published NEXUS MC domain.
+## Security
+Never commit the Minecraft token, PHP receiver secret, RCON passwords, private player data, or server credentials.
 
-The existing site is hosted at `https://nexusmc.nexusukrp.co.uk` through ChatGPT Sites. **Do not change its Cloudflare DNS record or replace it with this preview.**
-
-## Minecraft raid status exporter (v0.3.4)
-
-The separate NEXUS Raid Boss v0.3.4 plugin source now produces `plugins/NexusRaidBoss/raid-status.json` locally every five seconds. **This does not make the file publicly available.** Copy only this JSON using a secured automated upload to a read-only HTTPS endpoint, configure its CORS policy for the NEXUS MC website, then set `raidStatusUrl` in `config.json`. Do not expose Minecraft server credentials or administration APIs. Until the endpoint is configured, the raid panel intentionally says it is not connected.
-
-## cPanel bridge setup (2026-11-02)
-
-The Minecraft plugin already writes its local `raid-status.json`. A separate **secure bridge** is required to upload the status to cPanel. The downloadable setup kit includes a private-token PHP receiver, a public read-only `status.json`, and Linux/Windows upload scripts. Put the public files in `public_html/nexus-raid-api/`, keep the token **outside public_html and never in GitHub**, and schedule the uploader on the game host. Once `https://nexusukrp.co.uk/nexus-raid-api/status.json` displays verified current data, set `config.json` `raidStatusUrl` to that URL. This repository does not automatically publish the existing ChatGPT Sites project.
-
-## Direct Minecraft → cPanel sync (v0.3.5)
-
-NEXUS Raid Boss v0.3.5 adds optional asynchronous authenticated HTTPS publishing from PebbleHost to `https://nexusukrp.co.uk/nexus-raid-api/push.php` every 30 seconds. Configure `website-sync.enabled`, `website-sync.url` and `website-sync.token` in the **private Minecraft plugin** config. Keep that token outside this GitHub repository. After confirming the public `status.json` has a real `updatedAt` timestamp, set `raidStatusUrl` in this repository's `config.json` to `https://nexusukrp.co.uk/nexus-raid-api/status.json`. The ChatGPT Sites original page still needs the widget integrated and republished separately.
+## Preview
+Serve this directory locally (for example `python -m http.server 8080`) and visit http://localhost:8080. The browser needs internet access and the cPanel endpoint must allow cross-origin GET requests for the page's origin.
